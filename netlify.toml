@@ -2,3 +2,4 @@
 base = "docs/"
 publish = "_build/html"
 command = "make html"
+ignore = "git diff --quiet HEAD^ HEAD ."
