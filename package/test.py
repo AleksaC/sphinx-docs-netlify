@@ -2,10 +2,10 @@
 """
 import numpy as np
 
-def some_func():
-    """Just some function
+
+def a_function():
+    """A function
 
     Returns:
-        a numpy array of 10 zeros
+        nothing
     """
-    return np.zeros(10)
