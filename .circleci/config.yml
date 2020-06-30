@@ -10,7 +10,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "46:a6:6f:84:b6:c9:48:c4:77:f6:44:2e:23:9c:2e:d6"
+            - "32:47:9d:19:61:a8:59:67:de:2b:e2:2e:a9:64:ea:15"
       - checkout:
           path: ~/project
       - restore_cache:
