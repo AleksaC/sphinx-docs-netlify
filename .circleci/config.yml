@@ -34,7 +34,7 @@ jobs:
             then
               git config --global user.name "CircleCI"
               git add .
-              git commit --no-verify -m "Update docs ${CIRCLE_BUILD_URL} [skip ci]"
+              git commit --no-verify -m "Update docs ${CIRCLE_BUILD_URL} [ci skip]"
               git remote set-url origin $CIRCLE_REPOSITORY_URL > /dev/null 2>&1
               git push origin HEAD:${CIRCLE_BRANCH}
             fi
