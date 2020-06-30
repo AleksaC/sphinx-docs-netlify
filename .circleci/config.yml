@@ -1,0 +1,52 @@
+version: 2.1
+
+jobs:
+  generate-docs:
+    working_directory: ~/project/docs
+
+    docker:
+      - image: circleci/python:3.8.2
+
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "46:a6:6f:84:b6:c9:48:c4:77:f6:44:2e:23:9c:2e:d6"
+      - checkout:
+          path: ~/project
+      - restore_cache:
+          keys:
+            - sphinx-{{ .Branch }}-{{ checksum "requirements.txt" }}
+      - run:
+          name: install requirements
+          command: |
+            virtualenv venv -p python3
+            source venv/bin/activate
+            pip install -r requirements.txt
+      - run:
+          name: generate docs
+          command: |
+            source venv/bin/activate
+            make generate
+      - run:
+          name: push_back
+          command: |
+            if ! git diff-index --quiet HEAD -- .;
+            then
+              git config --global user.name "CircleCI"
+              git add .
+              git commit --no-verify -m "Update docs ${CIRCLE_BUILD_URL} [skip ci]"
+              git remote set-url origin $CIRCLE_REPOSITORY_URL > /dev/null 2>&1
+              git push origin HEAD:${CIRCLE_BRANCH}
+            fi
+          when: on_success
+      - save_cache:
+          key: sphinx-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          paths:
+            - venv
+          when: always
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - generate-docs
