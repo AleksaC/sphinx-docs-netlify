@@ -1,4 +1,4 @@
 """This package does nothing!
 """
 
-from .test import some_func
+from .test import a_function
