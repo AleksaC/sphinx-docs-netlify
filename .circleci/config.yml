@@ -30,7 +30,7 @@ jobs:
       - run:
           name: push_back
           command: |
-            if ! git diff-index --quiet HEAD -- .;
+            if git status --porcelain . | grep -q .;
             then
               git config --global user.name "CircleCI"
               git add .
